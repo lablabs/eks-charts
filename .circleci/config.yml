@@ -26,7 +26,7 @@ jobs:
       - run:
           name: Lint stable charts
           command: |
-            helm lint ./stable/*
+            helmv3 lint ./stable/*
       - run:
           name: Validate stable charts with Helm v2
           command: |
@@ -49,7 +49,7 @@ jobs:
           name: Package stable charts
           command: |
             mkdir $HOME/stable
-            helm package ./stable/* --destination $HOME/stable
+            helmv3 package ./stable/* --destination $HOME/stable
       - run:
           name: Publish stable charts
           command: |
@@ -60,7 +60,7 @@ jobs:
               git remote set-url origin ${REPOSITORY}
               git checkout gh-pages
               mv -f $HOME/stable/*.tgz .
-              helm repo index . --url https://lablabs.github.io/eks-charts
+              helmv3 repo index . --url https://lablabs.github.io/eks-charts
               git add .
               git commit -m "Publish stable charts ${CIRCLE_TAG}"
               git push origin gh-pages
