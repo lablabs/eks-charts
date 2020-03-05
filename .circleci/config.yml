@@ -54,13 +54,13 @@ jobs:
           name: Publish stable charts
           command: |
             if echo "${CIRCLE_TAG}" | grep -Eq "^v[0-9]+(\.[0-9]+)*(-[a-z0-9]+)?$"; then
-              REPOSITORY="https://eks-bot:${GITHUB_TOKEN}@github.com/aws/eks-charts.git"
+              REPOSITORY="git@github.com:lablabs/eks-charts.git"
               git config user.email eks-bot@users.noreply.github.com
               git config user.name eks-bot
               git remote set-url origin ${REPOSITORY}
               git checkout gh-pages
               mv -f $HOME/stable/*.tgz .
-              helm repo index . --url https://aws.github.io/eks-charts
+              helm repo index . --url https://lablabs.github.io/eks-charts
               git add .
               git commit -m "Publish stable charts ${CIRCLE_TAG}"
               git push origin gh-pages
